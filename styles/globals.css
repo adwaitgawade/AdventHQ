@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   AdventHQ — Design Tokens
+   Single source of truth for the brand. Swap these values (plus the two
+   next/font imports in app/layout.tsx) to fully re-skin the site.
+   ========================================================================== */
+:root {
+  /* Palette */
+  --base: #0a0a0b; /* near-black page background */
+  --surface: #141416; /* elevated cards / nav */
+  --surface-2: #1c1c1f; /* hover / nested surfaces */
+  --ink: #f2f0ec; /* off-white primary text */
+  --muted: #8a8a8f; /* secondary text */
+  --line: rgba(242, 240, 236, 0.1); /* hairline borders */
+
+  /* Single restrained accent — change this one line to recolor the brand */
+  --accent: #c6f24e; /* electric lime */
+  --accent-ink: #0a0a0b; /* text that sits on the accent */
+
+  /* Motion language */
+  --ease-glide: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.4s;
+  --dur: 0.7s;
+  --dur-slow: 1.1s;
+
+  /* Layout */
+  --shell: 1440px;
+  --gutter: clamp(1.25rem, 4vw, 5rem);
+
+  /* font vars are injected by next/font in layout.tsx:
+     --font-display, --font-sans */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Lenis handles smooth scroll in JS; keep native fallback sane. */
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--base);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hide native cursor only where the custom cursor is active (desktop). */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none;
+}
+
+/* ----- Display type helpers ----- */
+.display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+/* Single line inside a mask-reveal container */
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+.reveal-line {
+  display: block;
+  will-change: transform;
+}
+
+/* ----- Film grain overlay ----- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("/grain.svg");
+  background-size: 180px 180px;
+}
+
+/* ----- Faint vignette ----- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 120% at 50% 40%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+/* Utility: hide scrollbars on horizontal-scroll fallbacks */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Reduced motion — first-class path. Kill transforms/animation, keep content.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    display: none;
+  }
+}
