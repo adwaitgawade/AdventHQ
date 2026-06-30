@@ -46,6 +46,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <head>
+        {/* Runs before first paint: skip the preloader for returning / reduced-
+            motion users so it never flashes (and never flashes the hero first). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem('advent-preloaded')||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.setAttribute('data-skip-preloader','')}}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <SmoothScroll>
           <Preloader />

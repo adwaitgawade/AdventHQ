@@ -8,26 +8,26 @@ const GLIDE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Brief (~1.5s) intro: wordmark mask-reveals while a counter runs 0→100, then
- * the panel wipes up to expose the hero. Skipped instantly if the user has
- * reduced-motion set or already saw it this session.
+ * the panel wipes up to expose the hero.
+ *
+ * It renders ACTIVE on the server / first paint so it covers the hero from the
+ * very first frame (no flash of hero-then-preloader). Returning / reduced-motion
+ * users are skipped *before paint* by the inline script in app/layout.tsx, which
+ * sets `data-skip-preloader` on <html> and a CSS rule hides this panel instantly.
  */
 export default function Preloader() {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
   const [count, setCount] = useState(0);
   const { stop, start } = useSmoothScroll();
 
   useEffect(() => {
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const seen = sessionStorage.getItem("advent-preloaded");
-
-    if (reduced || seen) {
+    // The blocking inline script already decided whether to skip, before paint.
+    const skip = document.documentElement.hasAttribute("data-skip-preloader");
+    if (skip) {
       setActive(false);
       return;
     }
 
-    setActive(true);
     stop();
     document.body.style.overflow = "hidden";
 
@@ -43,7 +43,9 @@ export default function Preloader() {
 
     const done = window.setTimeout(() => {
       setActive(false);
-      sessionStorage.setItem("advent-preloaded", "1");
+      try {
+        sessionStorage.setItem("advent-preloaded", "1");
+      } catch {}
       document.body.style.overflow = "";
       start();
     }, duration + 300);
@@ -60,6 +62,7 @@ export default function Preloader() {
     <AnimatePresence>
       {active && (
         <motion.div
+          id="preloader"
           className="fixed inset-0 z-[120] flex items-end justify-between bg-base px-[var(--gutter)] pb-12"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
