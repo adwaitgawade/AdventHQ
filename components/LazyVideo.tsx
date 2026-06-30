@@ -62,6 +62,8 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
   }, [inView, load]);
 
   // Autoplay/pause loops based on visibility (never under reduced motion).
+  // `load` is a dep so this re-runs once the <video> actually mounts — the
+  // element doesn't exist on the render when `inView` first flips true.
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !autoLoop || reduced || manual) return;
@@ -70,7 +72,7 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
     } else {
       v.pause();
     }
-  }, [inView, autoLoop, reduced, manual]);
+  }, [inView, load, autoLoop, reduced, manual]);
 
   return (
     <div ref={containerRef} className={`relative h-full w-full overflow-hidden ${className}`}>

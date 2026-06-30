@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MagneticButton from "./MagneticButton";
 import { useSmoothScroll } from "./SmoothScroll";
 
@@ -16,15 +16,43 @@ const LINKS = [
 
 export default function Nav() {
   const [condensed, setCondensed] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { scrollTo, stop, start } = useSmoothScroll();
+  const lastY = useRef(0);
+  const { scrollTo, stop, start, lenis } = useSmoothScroll();
 
   useEffect(() => {
-    const onScroll = () => setCondensed(window.scrollY > window.innerHeight * 0.7);
+    // Update condensed background + auto-hide from a scroll position and
+    // travel direction. Past the hero, scrolling down hides the bar and
+    // scrolling up reveals it; within the hero it always stays visible.
+    const apply = (y: number, dir: number) => {
+      setCondensed(y > window.innerHeight * 0.7);
+      if (y < window.innerHeight) setHidden(false);
+      else if (dir > 0) setHidden(true);
+      else if (dir < 0) setHidden(false);
+      lastY.current = y;
+    };
+
+    if (lenis) {
+      // Lenis reports velocity (signed) — a clean, jitter-free direction.
+      const onScroll = (e: { scroll: number; velocity: number }) => {
+        const dir = e.velocity > 0.05 ? 1 : e.velocity < -0.05 ? -1 : 0;
+        apply(e.scroll, dir);
+      };
+      lenis.on("scroll", onScroll);
+      return () => lenis.off("scroll", onScroll);
+    }
+
+    // Reduced-motion / no-Lenis fallback: derive direction from window.scrollY.
+    const onScroll = () => {
+      const y = window.scrollY;
+      const dir = y > lastY.current + 4 ? 1 : y < lastY.current - 4 ? -1 : 0;
+      apply(y, dir);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lenis]);
 
   useEffect(() => {
     if (menuOpen) {
@@ -48,13 +76,17 @@ export default function Nav() {
         className="fixed inset-x-0 top-0 z-[80]"
         initial={false}
         animate={{
+          y: hidden && !menuOpen ? "-100%" : "0%",
           backgroundColor: condensed
             ? "rgba(10,10,11,0.72)"
             : "rgba(10,10,11,0)",
           backdropFilter: condensed ? "blur(12px)" : "blur(0px)",
           borderColor: condensed ? "var(--line)" : "rgba(0,0,0,0)",
         }}
-        transition={{ duration: 0.5, ease: GLIDE }}
+        transition={{
+          y: { duration: 0.4, ease: GLIDE },
+          default: { duration: 0.5, ease: GLIDE },
+        }}
         style={{ borderBottomWidth: 1 }}
       >
         <div className="mx-auto flex max-w-shell items-center justify-between px-[var(--gutter)] py-4 md:py-5">

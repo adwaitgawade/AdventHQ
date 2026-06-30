@@ -84,10 +84,10 @@ export default function Hero() {
       id="top"
       className="relative flex h-[100svh] min-h-[640px] w-full flex-col justify-end overflow-hidden"
     >
-      {/* Showreel background */}
+      {/* Hero background — looping ambient film */}
       <div ref={mediaRef} className="absolute inset-0 -z-10">
         <LazyVideo
-          src={SHOWREEL.src}
+          src="/hero-gwr.mp4"
           poster={SHOWREEL.poster}
           autoLoop
           className="h-full w-full"

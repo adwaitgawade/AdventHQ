@@ -18,12 +18,15 @@ type LenisCtx = {
   scrollTo: (target: ScrollTarget, opts?: { offset?: number }) => void;
   stop: () => void;
   start: () => void;
+  /** Live Lenis instance (null under reduced motion or before mount). */
+  lenis: Lenis | null;
 };
 
 const Ctx = createContext<LenisCtx>({
   scrollTo: () => {},
   stop: () => {},
   start: () => {},
+  lenis: null,
 });
 
 /** Access smooth-scroll controls (anchor nav, back-to-top, scroll lock). */
@@ -97,6 +100,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     },
     stop: () => lenisRef.current?.stop(),
     start: () => lenisRef.current?.start(),
+    lenis: lenisRef.current,
   };
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
