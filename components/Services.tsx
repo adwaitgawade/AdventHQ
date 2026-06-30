@@ -57,10 +57,13 @@ export default function Services() {
   return (
     <section id="services" className="relative scroll-mt-24 bg-base">
       <div ref={root} className={horizontal ? "h-screen overflow-hidden" : ""}>
+        {/* The whole row (intro + cards) is what slides horizontally, so the
+            pin distance covers every card — not just the cards container. */}
         <div
+          ref={track}
           className={
             horizontal
-              ? "flex h-full items-center"
+              ? "flex h-full w-max items-center"
               : "mx-auto max-w-shell px-[var(--gutter)] py-24"
           }
         >
@@ -68,7 +71,7 @@ export default function Services() {
           <div
             className={
               horizontal
-                ? "flex h-full w-[80vw] shrink-0 flex-col justify-center px-[var(--gutter)]"
+                ? "flex h-full w-[60vw] shrink-0 flex-col justify-center px-[var(--gutter)]"
                 : "mb-16"
             }
           >
@@ -89,10 +92,9 @@ export default function Services() {
 
           {/* The five cards */}
           <div
-            ref={track}
             className={
               horizontal
-                ? "flex h-full items-center gap-8 px-[var(--gutter)]"
+                ? "flex h-full items-center gap-8 pr-[var(--gutter)]"
                 : "grid grid-cols-1 gap-6"
             }
           >
