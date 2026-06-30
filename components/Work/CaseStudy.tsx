@@ -8,6 +8,13 @@ import CountUp from "../CountUp";
 
 const GLIDE = [0.16, 1, 0.3, 1] as const;
 
+const ASPECT: Record<Project["aspectRatio"], string> = {
+  "16:9": "16 / 9",
+  "9:16": "9 / 16",
+  "1:1": "1 / 1",
+  "4:5": "4 / 5",
+};
+
 type Props = {
   project: Project;
   onClose: () => void;
@@ -31,6 +38,8 @@ export default function CaseStudy({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const cs = project.caseStudy;
+  const portrait =
+    project.aspectRatio === "9:16" || project.aspectRatio === "4:5";
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -70,10 +79,14 @@ export default function CaseStudy({
       </div>
 
       <div className="mx-auto -mt-16 max-w-shell px-[var(--gutter)] pb-24">
-        {/* Hero clip — morphs from the tile */}
+        {/* Hero clip — morphs from the tile. Box follows the project's real
+            aspect ratio; portrait clips are capped to a centered column. */}
         <motion.div
           layoutId={`media-${project.id}`}
-          className="relative aspect-video w-full overflow-hidden rounded-xl bg-surface"
+          style={{ aspectRatio: ASPECT[project.aspectRatio] }}
+          className={`relative w-full overflow-hidden rounded-xl bg-surface ${
+            portrait ? "mx-auto max-w-sm" : ""
+          }`}
         >
           <video
             ref={videoRef}
@@ -179,15 +192,22 @@ export default function CaseStudy({
                 {/* TODO: add <track kind="captions"> when real assets land */}
               </div>
             ))}
-            {cs.stills.map((still, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={`still-${i}`}
-                src={still}
-                alt={`${project.title} still ${i + 1}`}
-                className="w-full rounded-xl"
-              />
-            ))}
+            {/* Portrait stills tile into a grid; landscape stills stack full-width. */}
+            <div
+              className={
+                portrait ? "grid grid-cols-2 gap-4 sm:grid-cols-3" : "space-y-6"
+              }
+            >
+              {cs.stills.map((still, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={`still-${i}`}
+                  src={still}
+                  alt={`${project.title} still ${i + 1}`}
+                  className="w-full rounded-xl"
+                />
+              ))}
+            </div>
           </div>
         )}
 

@@ -57,9 +57,44 @@ export const FILTERS: { id: Category | "all"; label: string }[] = [
 // TODO: replace with real AdventHQ asset CDN.
 const CDN = "https://storage.googleapis.com/gtv-videos-bucket/sample";
 
+// Real AdventHQ assets, served locally from /public/portfolio.
+const REMEDY = "/portfolio/hyper-motion/remedy-drinks";
+const remedyStill = (n: number) => `${REMEDY}/images/web/${n}.jpg`;
+
 const poster = (id: string) => `/posters/${id}.svg`; // TODO: replace with real still
 
 export const projects: Project[] = [
+  {
+    id: "remedy-hyper",
+    title: "Remedy — Hyper Reel",
+    client: "Remedy Drinks",
+    category: "hyper",
+    year: 2026,
+    aspectRatio: "9:16",
+    poster: remedyStill(14),
+    previewSrc: `${REMEDY}/remedydrinks.mp4`,
+    fullSrc: `${REMEDY}/remedydrinks.mp4`,
+    caseStudy: {
+      brief:
+        "Remedy wanted a sound-on, scroll-stopping hero for their no-sugar Pomegranate kombucha — a vertical film that felt like a hit of energy, not another can-on-a-table product shot.",
+      approach:
+        "We built the spot around the can as a fixed anchor and let everything else move: CG liquid crowns, bursting pomegranate, a cosmic ribbon of juice. Every beat is cut to the track so the first three seconds land before a thumb can scroll past, then we pull back to the label and the organic story — fruit, tea, no sugar.",
+      role: ["Creative Direction", "3D / CG", "Hyper Motion", "Edit", "Sound Design"],
+      stills: [
+        remedyStill(4),
+        remedyStill(12),
+        remedyStill(15),
+        remedyStill(6),
+        remedyStill(1),
+        remedyStill(7),
+      ],
+      stats: [
+        { label: "3-second hold rate", value: 74, suffix: "%" },
+        { label: "Reach in week one", value: 6.1, suffix: "M" },
+        { label: "Saves & shares", value: 88, suffix: "K" },
+      ],
+    },
+  },
   {
     id: "aurora-running",
     title: "Aurora — Run Free",
