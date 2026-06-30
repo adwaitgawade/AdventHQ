@@ -87,7 +87,7 @@ export default function Hero() {
       {/* Hero background — looping ambient film */}
       <div ref={mediaRef} className="absolute inset-0 -z-10">
         <LazyVideo
-          src="/hero-gwr.mp4"
+          src="/hero-montage.mp4"
           poster={SHOWREEL.poster}
           autoLoop
           className="h-full w-full"
