@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   title: "AdventHQ — Motion that moves the needle",
   description:
     "AdventHQ is a high-end motion design studio crafting ads, 3D & VFX, titles, UGC, marketing and hyper-motion films for brands that want to be remembered.",
+  icons: {
+    icon: "/favicon-gwr.png",
+    shortcut: "/favicon-gwr.png",
+    apple: "/favicon-gwr.png",
+  },
   openGraph: {
     title: "AdventHQ — Motion Design Studio",
     description:
