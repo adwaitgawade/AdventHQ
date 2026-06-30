@@ -45,6 +45,7 @@ export default function CaseStudy({
   return (
     <motion.div
       className="fixed inset-0 z-[110] overflow-y-auto overscroll-contain bg-base"
+      data-lenis-prevent
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

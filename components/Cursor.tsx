@@ -80,7 +80,7 @@ export default function Cursor() {
     <div
       ref={dotRef}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[100] flex items-center justify-center rounded-full text-[10px] font-semibold uppercase tracking-widest transition-[width,height,background-color,color] duration-300 ease-glide"
+      className="pointer-events-none fixed left-0 top-0 z-[200] flex items-center justify-center rounded-full text-[10px] font-semibold uppercase tracking-widest transition-[width,height,background-color,color] duration-300 ease-glide"
       style={{
         width: variant === "play" ? 84 : variant === "link" ? 56 : 12,
         height: variant === "play" ? 84 : variant === "link" ? 56 : 12,
