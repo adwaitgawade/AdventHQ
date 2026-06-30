@@ -110,6 +110,13 @@ button {
   will-change: transform;
 }
 
+/* Returning / reduced-motion users: hide the preloader before first paint so
+   neither the preloader nor the hero flashes. Set by the inline script in
+   app/layout.tsx (see Preloader.tsx). */
+html[data-skip-preloader] #preloader {
+  display: none !important;
+}
+
 /* ----- Film grain overlay ----- */
 .grain {
   position: fixed;
