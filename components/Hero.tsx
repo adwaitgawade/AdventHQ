@@ -8,6 +8,7 @@ import LazyVideo from "./LazyVideo";
 import Lightbox from "./Work/Lightbox";
 import MagneticButton from "./MagneticButton";
 import { useSmoothScroll } from "./SmoothScroll";
+import { useAudio } from "./AudioProvider";
 
 const HEADLINE = ["Motion that", "moves the needle."];
 
@@ -19,6 +20,7 @@ export default function Hero() {
   const mediaRef = useRef<HTMLDivElement>(null);
   const [reelOpen, setReelOpen] = useState(false);
   const { scrollTo } = useSmoothScroll();
+  const { soundOn, toggle: toggleSound } = useAudio();
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -142,9 +144,31 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-[0.3em] text-muted">
-        <span className="inline-block animate-pulse">Scroll</span>
+      {/* Scroll cue + neon master-audio toggle */}
+      <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3">
+        <button
+          onClick={toggleSound}
+          data-cursor="link"
+          aria-pressed={soundOn}
+          aria-label={
+            soundOn ? "Mute all videos" : "Enable sound for all videos"
+          }
+          title={soundOn ? "Mute all videos" : "Enable sound for all videos"}
+          className={`group relative flex h-14 w-14 items-center justify-center rounded-full border bg-base/40 backdrop-blur transition-all duration-500 ${
+            soundOn
+              ? "border-accent text-accent shadow-[0_0_28px_-2px_var(--accent)]"
+              : "border-line text-ink/80 hover:border-accent hover:text-accent hover:shadow-[0_0_22px_-4px_var(--accent)]"
+          }`}
+        >
+          {/* Pulsing neon ring while sound is live */}
+          {soundOn && (
+            <span className="absolute inset-0 animate-ping rounded-full border border-accent/50" />
+          )}
+          <SoundIcon on={soundOn} />
+        </button>
+        <span className="pointer-events-none text-[11px] uppercase tracking-[0.3em] text-muted">
+          <span className="inline-block animate-pulse">Scroll</span>
+        </span>
       </div>
 
       <Lightbox
@@ -155,5 +179,31 @@ export default function Hero() {
         onClose={() => setReelOpen(false)}
       />
     </section>
+  );
+}
+
+/** Speaker glyph — sound waves when on, a muted slash when off. */
+function SoundIcon({ on }: { on: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.7}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden
+    >
+      <path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none" />
+      {on ? (
+        <>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+          <path d="M18.5 6a8 8 0 0 1 0 12" />
+        </>
+      ) : (
+        <path d="m16 9 5 6m0-6-5 6" />
+      )}
+    </svg>
   );
 }

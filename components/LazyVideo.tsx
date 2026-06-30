@@ -3,6 +3,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useInView } from "@/lib/useInView";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useMutedSync } from "./AudioProvider";
 
 type Props = {
   src: string;
@@ -49,6 +50,10 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
   const [load, setLoad] = useState(false);
+
+  // Follow the site-wide audio master. The element only mounts once `load`
+  // flips true, so re-sync on that too.
+  useMutedSync(videoRef, [load]);
 
   useImperativeHandle(ref, () => ({
     play: () => videoRef.current?.play().catch(() => {}),

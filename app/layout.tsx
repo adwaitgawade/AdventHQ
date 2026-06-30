@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "@/styles/globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import AudioProvider from "@/components/AudioProvider";
 import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
 import Nav from "@/components/Nav";
@@ -61,12 +62,14 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <SmoothScroll>
-          <Preloader />
-          <Cursor />
-          <Nav />
-          <main>{children}</main>
-        </SmoothScroll>
+        <AudioProvider>
+          <SmoothScroll>
+            <Preloader />
+            <Cursor />
+            <Nav />
+            <main>{children}</main>
+          </SmoothScroll>
+        </AudioProvider>
         {/* Texture overlays sit above content but never intercept pointers */}
         <div className="grain" aria-hidden />
         <div className="vignette" aria-hidden />

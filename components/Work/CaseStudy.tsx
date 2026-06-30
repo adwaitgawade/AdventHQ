@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { Project } from "@/data/projects";
 import { CATEGORY_LABELS } from "@/data/projects";
 import CountUp from "../CountUp";
+import { useAudio, useMutedSync } from "../AudioProvider";
 
 const GLIDE = [0.16, 1, 0.3, 1] as const;
 
@@ -36,7 +37,8 @@ export default function CaseStudy({
   hasNext,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+  const { soundOn, toggle } = useAudio();
+  useMutedSync(videoRef);
   const cs = project.caseStudy;
   const portrait =
     project.aspectRatio === "9:16" || project.aspectRatio === "4:5";
@@ -93,18 +95,18 @@ export default function CaseStudy({
             src={project.fullSrc}
             poster={project.poster}
             autoPlay
-            muted={muted}
+            muted={!soundOn}
             loop
             playsInline
             className="h-full w-full object-cover"
           />
           <button
-            onClick={() => setMuted((m) => !m)}
+            onClick={toggle}
             data-cursor="link"
-            aria-label={muted ? "Unmute" : "Mute"}
+            aria-label={soundOn ? "Mute" : "Unmute"}
             className="absolute bottom-4 right-4 rounded-full border border-line bg-base/60 px-4 py-2 text-xs uppercase tracking-widest text-ink backdrop-blur"
           >
-            {muted ? "Sound on" : "Sound off"}
+            {soundOn ? "Sound off" : "Sound on"}
           </button>
         </motion.div>
 
@@ -175,22 +177,11 @@ export default function CaseStudy({
         {cs && (cs.stills.length > 0 || cs.clips?.length) && (
           <div className="mt-20 space-y-6">
             {cs.clips?.map((clip, i) => (
-              <div
+              <CaseStudyClip
                 key={`clip-${i}`}
-                className="aspect-video w-full overflow-hidden rounded-xl bg-surface"
-              >
-                <video
-                  src={clip}
-                  poster={project.poster}
-                  muted
-                  loop
-                  autoPlay
-                  playsInline
-                  preload="none"
-                  className="h-full w-full object-cover"
-                />
-                {/* TODO: add <track kind="captions"> when real assets land */}
-              </div>
+                src={clip}
+                poster={project.poster}
+              />
             ))}
             {/* Portrait stills tile into a grid; landscape stills stack full-width. */}
             <div
@@ -239,6 +230,28 @@ export default function CaseStudy({
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/** Secondary case-study clip — autoplay loop that follows the audio master. */
+function CaseStudyClip({ src, poster }: { src: string; poster: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useMutedSync(ref);
+  return (
+    <div className="aspect-video w-full overflow-hidden rounded-xl bg-surface">
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        muted
+        loop
+        autoPlay
+        playsInline
+        preload="none"
+        className="h-full w-full object-cover"
+      />
+      {/* TODO: add <track kind="captions"> when real assets land */}
+    </div>
   );
 }
 

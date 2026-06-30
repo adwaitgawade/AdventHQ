@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import type { Project } from "@/data/projects";
 import { CATEGORY_LABELS } from "@/data/projects";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useMutedSync } from "../AudioProvider";
 
 const ASPECT: Record<Project["aspectRatio"], string> = {
   "16:9": "16 / 9",
@@ -30,6 +31,7 @@ export default function Tile({ project, onOpen, featured }: Props) {
   const [loadVideo, setLoadVideo] = useState(false);
   const [hover, setHover] = useState(false);
   const reduced = useReducedMotion();
+  useMutedSync(videoRef, [loadVideo]);
 
   const enter = () => {
     if (reduced) return;
