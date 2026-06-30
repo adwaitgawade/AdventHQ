@@ -72,11 +72,11 @@ export default function Process() {
         </h2>
 
         <div ref={root} className="relative mt-20 pl-10 md:pl-16">
-          {/* track + drawn line */}
-          <div className="absolute left-[14px] top-2 h-[calc(100%-1rem)] w-px bg-line md:left-[22px]" />
+          {/* track + drawn line — centered under the nodes (dot center sits at x=8px on both breakpoints) */}
+          <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-px -translate-x-1/2 bg-line" />
           <div
             ref={line}
-            className="absolute left-[14px] top-2 h-[calc(100%-1rem)] w-px origin-top bg-accent md:left-[22px]"
+            className="absolute left-2 top-2 h-[calc(100%-1rem)] w-px origin-top -translate-x-1/2 bg-accent"
           />
 
           <div className="space-y-16">
