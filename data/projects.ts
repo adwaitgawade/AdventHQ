@@ -101,6 +101,17 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "pe-nation",
+    title: "PE Nation — In Motion",
+    client: "PE Nation",
+    category: "ads",
+    year: 2025,
+    aspectRatio: "9:16",
+    poster: poster("pe-nation"),
+    previewSrc: `${R2}/ads/pe-nation.mp4`,
+    fullSrc: `${R2}/ads/pe-nation.mp4`,
+  },
+  {
     id: "aurora-running",
     title: "Aurora — Run Free",
     client: "Aurora Athletics",

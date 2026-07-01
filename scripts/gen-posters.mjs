@@ -24,6 +24,7 @@ const items = [
   ["ember-ad", "Ember — Holiday", "Ember Home", "#331a0c", "#0a0a0b"],
   ["prism-3d", "Prism — Logo System", "Prism", "#1c1033", "#0a0a0b"],
   ["remedy-hyper", "Remedy — Hyper Reel", "Remedy Drinks", "#2a0c1c", "#0a0a0b"],
+  ["pe-nation", "PE Nation — In Motion", "PE Nation", "#161d2e", "#0a0a0b"],
   ["showreel", "AdventHQ — Showreel 2025", "Motion Design Studio", "#11131a", "#060607"],
 ];
 
