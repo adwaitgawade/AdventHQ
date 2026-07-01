@@ -122,32 +122,38 @@ export default function CaseStudy({
           </div>
         </motion.div>
 
-        {cs && (
+        {cs && (cs.brief || cs.approach || cs.role?.length) && (
           <div className="mt-16 grid gap-12 md:grid-cols-12">
             {/* Brief + approach */}
-            <div className="md:col-span-7 md:col-start-1">
-              <Block label="The brief" body={cs.brief} />
-              <div className="mt-10">
-                <Block label="Our approach" body={cs.approach} />
+            {(cs.brief || cs.approach) && (
+              <div className="md:col-span-7 md:col-start-1">
+                {cs.brief && <Block label="The brief" body={cs.brief} />}
+                {cs.approach && (
+                  <div className={cs.brief ? "mt-10" : ""}>
+                    <Block label="Our approach" body={cs.approach} />
+                  </div>
+                )}
               </div>
-            </div>
+            )}
 
             {/* Role / deliverables */}
-            <div className="md:col-span-4 md:col-start-9">
-              <h4 className="text-xs uppercase tracking-widest text-muted">
-                Role &amp; deliverables
-              </h4>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {cs.role.map((r) => (
-                  <li
-                    key={r}
-                    className="rounded-full border border-line px-3 py-1.5 text-sm text-ink"
-                  >
-                    {r}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {cs.role && cs.role.length > 0 && (
+              <div className="md:col-span-4 md:col-start-9">
+                <h4 className="text-xs uppercase tracking-widest text-muted">
+                  Role &amp; deliverables
+                </h4>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {cs.role.map((r) => (
+                    <li
+                      key={r}
+                      className="rounded-full border border-line px-3 py-1.5 text-sm text-ink"
+                    >
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
 

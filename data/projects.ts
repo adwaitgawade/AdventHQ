@@ -14,9 +14,9 @@ export type AspectRatio = "16:9" | "9:16" | "1:1" | "4:5";
 export type Stat = { label: string; value: number; suffix?: string };
 
 export type CaseStudy = {
-  brief: string;
-  approach: string;
-  role: string[];
+  brief?: string;
+  approach?: string;
+  role?: string[];
   stills: string[];
   clips?: string[];
   stats?: Stat[];
@@ -110,6 +110,21 @@ export const projects: Project[] = [
     poster: poster("pe-nation"),
     previewSrc: `${R2}/ads/pe-nation.mp4`,
     fullSrc: `${R2}/ads/pe-nation.mp4`,
+  },
+  {
+    id: "adine",
+    title: "Adine — Skin Deep",
+    client: "Adine",
+    category: "marketing",
+    year: 2025,
+    aspectRatio: "16:9",
+    poster: `${R2}/marketing/niacinamide.png`,
+    previewSrc: `${R2}/marketing/adine.mp4`,
+    fullSrc: `${R2}/marketing/adine.mp4`,
+    featured: true,
+    caseStudy: {
+      stills: [`${R2}/marketing/niacinamide.png`],
+    },
   },
   {
     id: "aurora-running",
