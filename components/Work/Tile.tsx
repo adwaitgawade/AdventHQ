@@ -6,13 +6,7 @@ import type { Project } from "@/data/projects";
 import { CATEGORY_LABELS } from "@/data/projects";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useMutedSync } from "../AudioProvider";
-
-const ASPECT: Record<Project["aspectRatio"], string> = {
-  "16:9": "16 / 9",
-  "9:16": "9 / 16",
-  "1:1": "1 / 1",
-  "4:5": "4 / 5",
-};
+import { ASPECT, GLIDE_CUBIC } from "@/lib/constants";
 
 type Props = {
   project: Project;
@@ -57,7 +51,7 @@ export default function Tile({ project, onOpen, featured }: Props) {
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.7, ease: GLIDE_CUBIC }}
       onClick={() => onOpen(project)}
       onMouseEnter={enter}
       onMouseLeave={leave}

@@ -4,6 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
+import { GLIDE_CUBIC } from "@/lib/constants";
 import { projects } from "@/data/projects";
 import type { Category, Project } from "@/data/projects";
 import { useSmoothScroll } from "../SmoothScroll";
@@ -100,7 +101,7 @@ export default function Work() {
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.5, ease: GLIDE_CUBIC }}
                   className={p.featured ? "sm:col-span-2 lg:col-span-3" : ""}
                 >
                   <Tile project={p} onOpen={setSelected} featured={p.featured} />

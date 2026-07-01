@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { testimonials } from "@/data/clients";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 export default function Testimonials() {
   const [i, setI] = useState(0);
@@ -36,7 +36,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.6, ease: GLIDE }}
+              transition={{ duration: 0.6, ease: GLIDE_CUBIC }}
               className="max-w-5xl"
             >
               <p className="display text-3xl leading-[1.15] tracking-tight md:text-6xl">

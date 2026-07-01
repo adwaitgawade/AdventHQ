@@ -5,7 +5,7 @@ import { useState } from "react";
 import { services } from "@/data/services";
 import MagneticButton from "./MagneticButton";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 // TODO: replace with real AdventHQ contact + socials.
 const EMAIL = "hello@adventhq.studio";
@@ -68,7 +68,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
-          transition={{ duration: 0.9, ease: GLIDE }}
+          transition={{ duration: 0.9, ease: GLIDE_CUBIC }}
           className="display text-[14vw] leading-[0.9] tracking-tightest md:text-[9vw]"
         >
           Got something

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import MagneticButton from "./MagneticButton";
 import { useSmoothScroll } from "./SmoothScroll";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 const LINKS = [
   { label: "Work", href: "#work" },
@@ -84,8 +84,8 @@ export default function Nav() {
           borderColor: condensed ? "var(--line)" : "rgba(0,0,0,0)",
         }}
         transition={{
-          y: { duration: 0.4, ease: GLIDE },
-          default: { duration: 0.5, ease: GLIDE },
+          y: { duration: 0.4, ease: GLIDE_CUBIC },
+          default: { duration: 0.5, ease: GLIDE_CUBIC },
         }}
         style={{ borderBottomWidth: 1 }}
       >
@@ -145,7 +145,7 @@ export default function Nav() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: GLIDE }}
+            transition={{ duration: 0.4, ease: GLIDE_CUBIC }}
           >
             {LINKS.map((l, i) => (
               <motion.button
@@ -154,7 +154,7 @@ export default function Nav() {
                 className="display text-left text-5xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.06 * i + 0.1, ease: GLIDE }}
+                transition={{ delay: 0.06 * i + 0.1, ease: GLIDE_CUBIC }}
               >
                 {l.label}
               </motion.button>

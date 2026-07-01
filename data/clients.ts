@@ -1,24 +1,6 @@
 /**
- * Marquee / trust strip content. Mix of client names and capability keywords.
- * TODO: replace placeholder client names with real logos (clients[].logo).
+ * Trust-strip / marquee content, plus testimonials, process steps and stats.
  */
-
-export type Client = { name: string; logo?: string };
-
-export const clients: Client[] = [
-  { name: "Aurora Athletics" },
-  { name: "NYX Studios" },
-  { name: "Flux Labs" },
-  { name: "Volt Energy" },
-  { name: "Monolith" },
-  { name: "Pulse App" },
-  { name: "Halo Beauty" },
-  { name: "Atlas Cloud" },
-  { name: "Nova Motors" },
-  { name: "Ember Home" },
-  { name: "Prism" },
-  { name: "Drift Audio" },
-];
 
 /** Capability keywords for the velocity marquee. */
 export const capabilities: string[] = [

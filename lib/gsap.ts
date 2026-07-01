@@ -16,7 +16,4 @@ if (typeof window !== "undefined" && !registered) {
   registered = true;
 }
 
-export const GLIDE = "power3.out";
-export const GLIDE_CUBIC = [0.16, 1, 0.3, 1] as const;
-
 export { gsap, ScrollTrigger };

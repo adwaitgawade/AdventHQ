@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSmoothScroll } from "./SmoothScroll";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 /** Fired the moment the panel starts wiping up, so the hero can begin playback. */
 export const PRELOAD_DONE_EVENT = "advent:preload-done";
@@ -76,14 +76,14 @@ export default function Preloader() {
           className="fixed inset-0 z-[120] flex items-end justify-between bg-base px-[var(--gutter)] pb-12"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 0.9, ease: GLIDE }}
+          transition={{ duration: 0.9, ease: GLIDE_CUBIC }}
         >
           <div className="reveal-mask">
             <motion.span
               className="display block text-[12vw] leading-none md:text-[8vw]"
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 1, ease: GLIDE, delay: 0.05 }}
+              transition={{ duration: 1, ease: GLIDE_CUBIC, delay: 0.05 }}
             >
               AdventHQ
             </motion.span>

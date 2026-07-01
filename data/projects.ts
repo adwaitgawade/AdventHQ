@@ -293,5 +293,3 @@ export const SHOWREEL = {
   poster: "/posters/showreel.svg", // TODO: replace with real AdventHQ asset
   src: `${CDN}/ForBiggerJoyrides.mp4`, // TODO: replace with real AdventHQ showreel
 };
-
-export const featuredProjects = projects.filter((p) => p.featured);

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { studioStats } from "@/data/clients";
 import CountUp from "./CountUp";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 // TODO: replace with real AdventHQ team members + portraits.
 const team = [
@@ -25,7 +25,7 @@ export default function Studio() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
-          transition={{ duration: 0.9, ease: GLIDE }}
+          transition={{ duration: 0.9, ease: GLIDE_CUBIC }}
           className="display mt-6 max-w-4xl text-3xl leading-[1.1] tracking-tight md:text-5xl"
         >
           AdventHQ is a small, senior studio obsessed with{" "}

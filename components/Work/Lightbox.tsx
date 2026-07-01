@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 type Props = {
   open: boolean;
@@ -94,7 +94,7 @@ export default function Lightbox({ open, src, poster, title, onClose }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease: GLIDE }}
+          transition={{ duration: 0.35, ease: GLIDE_CUBIC }}
           onClick={close}
           role="dialog"
           aria-modal="true"
@@ -106,7 +106,7 @@ export default function Lightbox({ open, src, poster, title, onClose }: Props) {
             initial={{ scale: 0.96, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.96, opacity: 0 }}
-            transition={{ duration: 0.4, ease: GLIDE }}
+            transition={{ duration: 0.4, ease: GLIDE_CUBIC }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative aspect-video overflow-hidden rounded-xl bg-black">

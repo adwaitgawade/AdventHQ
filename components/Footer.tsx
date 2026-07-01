@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useSmoothScroll } from "./SmoothScroll";
 
-const GLIDE = [0.16, 1, 0.3, 1] as const;
+import { GLIDE_CUBIC } from "@/lib/constants";
 
 const LINKS = [
   { label: "Work", href: "#work" },
@@ -74,7 +74,7 @@ export default function Footer() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, ease: GLIDE }}
+          transition={{ duration: 1, ease: GLIDE_CUBIC }}
           className="mt-16 select-none"
         >
           <h2 className="display text-[22vw] leading-[0.8] tracking-tightest md:text-[18vw]">

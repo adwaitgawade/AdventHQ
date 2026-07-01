@@ -14,13 +14,11 @@ type AudioCtx = {
   /** Master switch: when true, inline ambient videos play with sound. */
   soundOn: boolean;
   toggle: () => void;
-  setSoundOn: (v: boolean) => void;
 };
 
 const Ctx = createContext<AudioCtx>({
   soundOn: false,
   toggle: () => {},
-  setSoundOn: () => {},
 });
 
 /** Access the site-wide audio master (hero neon toggle + inline videos). */
@@ -52,7 +50,7 @@ export default function AudioProvider({ children }: { children: ReactNode }) {
   const toggle = useCallback(() => setSoundOn((s) => !s), []);
 
   return (
-    <Ctx.Provider value={{ soundOn, toggle, setSoundOn }}>
+    <Ctx.Provider value={{ soundOn, toggle }}>
       {children}
     </Ctx.Provider>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { services } from "@/data/services";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import LazyVideo from "./LazyVideo";

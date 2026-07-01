@@ -6,15 +6,7 @@ import type { Project } from "@/data/projects";
 import { CATEGORY_LABELS } from "@/data/projects";
 import CountUp from "../CountUp";
 import { useAudio, useMutedSync } from "../AudioProvider";
-
-const GLIDE = [0.16, 1, 0.3, 1] as const;
-
-const ASPECT: Record<Project["aspectRatio"], string> = {
-  "16:9": "16 / 9",
-  "9:16": "9 / 16",
-  "1:1": "1 / 1",
-  "4:5": "4 / 5",
-};
+import { ASPECT, GLIDE_CUBIC } from "@/lib/constants";
 
 type Props = {
   project: Project;
@@ -114,7 +106,7 @@ export default function CaseStudy({
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: GLIDE, delay: 0.15 }}
+          transition={{ duration: 0.7, ease: GLIDE_CUBIC, delay: 0.15 }}
           className="mt-10 flex flex-col justify-between gap-6 md:flex-row md:items-end"
         >
           <h2 className="display max-w-2xl text-4xl leading-none md:text-6xl">
