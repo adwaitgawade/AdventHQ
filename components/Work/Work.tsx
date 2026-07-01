@@ -3,6 +3,7 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
+import { ScrollTrigger } from "@/lib/gsap";
 import { projects } from "@/data/projects";
 import type { Category, Project } from "@/data/projects";
 import { useSmoothScroll } from "../SmoothScroll";
@@ -40,6 +41,15 @@ export default function Work() {
       document.body.style.overflow = "";
     };
   }, [selected, stop, start]);
+
+  // Filtering changes this section's height, which shifts every section below
+  // it. GSAP pins Services using cached scroll positions, so without this the
+  // pin fires at stale coordinates — leaving a blank gap here and overlapping
+  // the sections below. Recompute once the reflow settles.
+  useEffect(() => {
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 600);
+    return () => window.clearTimeout(id);
+  }, [filter]);
 
   const selectedIndex = selected
     ? filtered.findIndex((p) => p.id === selected.id)
@@ -79,6 +89,7 @@ export default function Work() {
         <LayoutGroup>
           <motion.div
             layout
+            onLayoutAnimationComplete={() => ScrollTrigger.refresh()}
             className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             <AnimatePresence mode="popLayout">
