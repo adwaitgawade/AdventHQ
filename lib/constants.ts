@@ -14,6 +14,18 @@ export const INSTAGRAM_URL = "https://www.instagram.com/i.adventhq/";
 /** Primary contact email. */
 export const CONTACT_EMAIL = "adwaitg02@gmail.com";
 
+/**
+ * WhatsApp click-to-chat. Number is digits-only (no +, spaces or symbols).
+ * The bracketed placeholders in the message are intentional — the sender fills
+ * them in before hitting send.
+ */
+export const WHATSAPP_NUMBER = "917738053594";
+export const WHATSAPP_MESSAGE =
+  "Hi, we would like you to create [THEME/NICHE] videos for our [Facebook ad | Instagram | Tiktok]";
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE
+)}`;
+
 /** Maps a project aspect ratio to its CSS `aspect-ratio` value. */
 export const ASPECT: Record<AspectRatio, string> = {
   "16:9": "16 / 9",

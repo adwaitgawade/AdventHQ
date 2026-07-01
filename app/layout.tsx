@@ -6,6 +6,7 @@ import AudioProvider from "@/components/AudioProvider";
 import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
 import Nav from "@/components/Nav";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 // Display + body faces loaded via next/font. Swap these two imports (and the
 // --accent token in globals.css) to fully re-skin the brand.
@@ -70,6 +71,8 @@ export default function RootLayout({
             <main>{children}</main>
           </SmoothScroll>
         </AudioProvider>
+        {/* Floating WhatsApp click-to-chat CTA (global) */}
+        <WhatsAppButton />
         {/* Texture overlays sit above content but never intercept pointers */}
         <div className="grain" aria-hidden />
         <div className="vignette" aria-hidden />
