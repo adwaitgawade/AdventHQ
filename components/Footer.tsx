@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useSmoothScroll } from "./SmoothScroll";
 
-import { GLIDE_CUBIC } from "@/lib/constants";
+import { CONTACT_EMAIL, GLIDE_CUBIC, INSTAGRAM_URL } from "@/lib/constants";
 
 const LINKS = [
   { label: "Work", href: "#work" },
@@ -44,18 +44,28 @@ export default function Footer() {
           </div>
 
           <div className="text-sm md:text-right">
-            {/* TODO: replace with real AdventHQ contact */}
             <a
-              href="mailto:hello@adventhq.studio"
+              href={`mailto:${CONTACT_EMAIL}`}
               data-cursor="link"
               className="text-ink transition-colors hover:text-accent"
             >
-              hello@adventhq.studio
+              {CONTACT_EMAIL}
             </a>
             <div className="mt-3 flex gap-4 text-muted md:justify-end">
-              {["Instagram", "Vimeo", "LinkedIn"].map((s) => (
-                <a key={s} href="#" data-cursor="link" className="hover:text-ink">
-                  {s}
+              {[
+                { label: "Instagram", href: INSTAGRAM_URL },
+                { label: "Vimeo", href: "#" },
+                { label: "LinkedIn", href: "#" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target={s.href.startsWith("http") ? "_blank" : undefined}
+                  rel={s.href.startsWith("http") ? "noreferrer noopener" : undefined}
+                  data-cursor="link"
+                  className="hover:text-ink"
+                >
+                  {s.label}
                 </a>
               ))}
             </div>

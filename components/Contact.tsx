@@ -5,18 +5,18 @@ import { useState } from "react";
 import { services } from "@/data/services";
 import MagneticButton from "./MagneticButton";
 
-import { GLIDE_CUBIC } from "@/lib/constants";
+import { CONTACT_EMAIL, GLIDE_CUBIC, INSTAGRAM_URL } from "@/lib/constants";
 
-// TODO: replace with real AdventHQ contact + socials.
-const EMAIL = "hello@adventhq.studio";
+// TODO: replace remaining placeholder socials with real AdventHQ profiles.
+const EMAIL = CONTACT_EMAIL;
 const SOCIALS = [
-  { label: "Instagram", href: "#" },
+  { label: "Instagram", href: INSTAGRAM_URL },
   { label: "Vimeo", href: "#" },
   { label: "LinkedIn", href: "#" },
   { label: "Behance", href: "#" },
 ];
 
-const BUDGETS = ["< $10k", "$10k–$25k", "$25k–$50k", "$50k–$100k", "$100k+"];
+const BUDGETS = ["$500 - 3 Videos", "$500 to 5k - Monthly 30+ Short Videos", "$5k to 10k - Monthly 60+ Short Videos", "> $10k - Film"];
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 type Status = "idle" | "submitting" | "success" | "error";
@@ -158,6 +158,8 @@ export default function Contact() {
                   <li key={s.label}>
                     <a
                       href={s.href}
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel={s.href.startsWith("http") ? "noreferrer noopener" : undefined}
                       data-cursor="link"
                       className="group inline-flex items-center gap-2 text-ink"
                     >

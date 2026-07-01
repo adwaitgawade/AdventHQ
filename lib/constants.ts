@@ -8,6 +8,12 @@ import type { AspectRatio } from "@/data/projects";
 /** Brand cubic-bezier ease for Framer Motion transitions — everything glides. */
 export const GLIDE_CUBIC = [0.16, 1, 0.3, 1] as const;
 
+/** Official AdventHQ Instagram profile. */
+export const INSTAGRAM_URL = "https://www.instagram.com/i.adventhq/";
+
+/** Primary contact email. */
+export const CONTACT_EMAIL = "adwaitg02@gmail.com";
+
 /** Maps a project aspect ratio to its CSS `aspect-ratio` value. */
 export const ASPECT: Record<AspectRatio, string> = {
   "16:9": "16 / 9",

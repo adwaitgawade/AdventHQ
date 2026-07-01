@@ -8,11 +8,8 @@ import { GLIDE_CUBIC } from "@/lib/constants";
 
 // TODO: replace with real AdventHQ team members + portraits.
 const team = [
-  { name: "Ravi Menon", role: "Founder / ECD" },
-  { name: "Lena Park", role: "Head of 3D" },
-  { name: "Marco Vidal", role: "Design Director" },
-  { name: "Aisha Bello", role: "Lead Animator" },
-  { name: "Sora Tan", role: "Producer" },
+  { name: "Adwait Gawade", role: "Head Animator" },
+  { name: "Onkar Mandlik", role: "Head of Operations" }
 ];
 
 export default function Studio() {
