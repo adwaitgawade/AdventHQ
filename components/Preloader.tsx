@@ -6,6 +6,14 @@ import { useSmoothScroll } from "./SmoothScroll";
 
 const GLIDE = [0.16, 1, 0.3, 1] as const;
 
+/** Fired the moment the panel starts wiping up, so the hero can begin playback. */
+export const PRELOAD_DONE_EVENT = "advent:preload-done";
+const signalDone = () => {
+  try {
+    window.dispatchEvent(new Event(PRELOAD_DONE_EVENT));
+  } catch { }
+};
+
 /**
  * Brief (~1.5s) intro: wordmark mask-reveals while a counter runs 0→100, then
  * the panel wipes up to expose the hero.
@@ -25,6 +33,7 @@ export default function Preloader() {
     const skip = document.documentElement.hasAttribute("data-skip-preloader");
     if (skip) {
       setActive(false);
+      signalDone();
       return;
     }
 
@@ -43,9 +52,10 @@ export default function Preloader() {
 
     const done = window.setTimeout(() => {
       setActive(false);
+      signalDone();
       try {
         sessionStorage.setItem("advent-preloaded", "1");
-      } catch {}
+      } catch { }
       document.body.style.overflow = "";
       start();
     }, duration + 300);
@@ -78,7 +88,10 @@ export default function Preloader() {
               AdventHQ
             </motion.span>
           </div>
-          <span className="display mb-2 text-2xl tabular-nums text-muted">
+          <span
+            className="display mb-2 text-2xl tabular-nums"
+            style={{ color: "var(--accent)" }}
+          >
             {count}
           </span>
         </motion.div>

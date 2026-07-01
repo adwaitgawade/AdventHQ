@@ -13,6 +13,8 @@ type Props = {
   autoLoop?: boolean;
   /** When true, only attach src once in view, and don't autoplay (case study). */
   manual?: boolean;
+  /** Hold autoplay while true, even if in view (e.g. until the preloader lifts). */
+  paused?: boolean;
   muted?: boolean;
   loop?: boolean;
   playsInline?: boolean;
@@ -37,6 +39,7 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
     className = "",
     autoLoop = false,
     manual = false,
+    paused = false,
     muted = true,
     loop = true,
     playsInline = true,
@@ -72,12 +75,12 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !autoLoop || reduced || manual) return;
-    if (inView) {
+    if (inView && !paused) {
       v.play().catch(() => {});
     } else {
       v.pause();
     }
-  }, [inView, load, autoLoop, reduced, manual]);
+  }, [inView, load, autoLoop, reduced, manual, paused]);
 
   return (
     <div ref={containerRef} className={`relative h-full w-full overflow-hidden ${className}`}>

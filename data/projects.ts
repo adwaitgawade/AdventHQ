@@ -61,6 +61,9 @@ const CDN = "https://storage.googleapis.com/gtv-videos-bucket/sample";
 const REMEDY = "/portfolio/hyper-motion/remedy-drinks";
 const remedyStill = (n: number) => `${REMEDY}/images/web/${n}.jpg`;
 
+const AURORA = "/portfolio/ads/aurora-shoes";
+const auroraStill = (n: number) => `${AURORA}/images/${n}.png`;
+
 const poster = (id: string) => `/posters/${id}.svg`; // TODO: replace with real still
 
 export const projects: Project[] = [
@@ -102,9 +105,9 @@ export const projects: Project[] = [
     category: "ads",
     year: 2025,
     aspectRatio: "16:9",
-    poster: poster("aurora-running"),
-    previewSrc: `${CDN}/ForBiggerJoyrides.mp4`, // TODO: replace with real AdventHQ asset
-    fullSrc: `${CDN}/ForBiggerJoyrides.mp4`, // TODO: replace with real AdventHQ asset
+    poster: auroraStill(1),
+    previewSrc: `${AURORA}/aurora-shoes-gwr.mp4`,
+    fullSrc: `${AURORA}/aurora-shoes-gwr.mp4`,
     featured: true,
     caseStudy: {
       brief:
@@ -112,8 +115,8 @@ export const projects: Project[] = [
       approach:
         "We built a single unbroken move that hands off between live plates and CG, letting the product appear only at peak velocity. Type kinetically tracks the runner's cadence.",
       role: ["Creative Direction", "Design", "3D / CG", "Animation", "Edit"],
-      stills: [poster("aurora-running"), poster("nyx-titles"), poster("flux-ui")],
-      clips: [`${CDN}/ForBiggerBlazes.mp4`], // TODO: replace
+      stills: [auroraStill(1), auroraStill(2)],
+      clips: [`${AURORA}/shoe-360-gwr.mp4`],
       stats: [
         { label: "Launch-day views", value: 4.2, suffix: "M" },
         { label: "Add-to-cart lift", value: 38, suffix: "%" },

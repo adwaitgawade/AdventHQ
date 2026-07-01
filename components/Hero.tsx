@@ -9,6 +9,7 @@ import Lightbox from "./Work/Lightbox";
 import MagneticButton from "./MagneticButton";
 import { useSmoothScroll } from "./SmoothScroll";
 import { useAudio } from "./AudioProvider";
+import { PRELOAD_DONE_EVENT } from "./Preloader";
 
 const HEADLINE = ["Motion that", "moves the needle."];
 
@@ -19,8 +20,22 @@ export default function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const [reelOpen, setReelOpen] = useState(false);
+  // Hold the hero video until the preloader lifts, then let it play.
+  const [revealed, setRevealed] = useState(false);
   const { scrollTo } = useSmoothScroll();
   const { soundOn, toggle: toggleSound } = useAudio();
+
+  useEffect(() => {
+    // Returning / reduced-motion visitors never see the preloader — the inline
+    // script marks that before paint, so start playing right away.
+    if (document.documentElement.hasAttribute("data-skip-preloader")) {
+      setRevealed(true);
+      return;
+    }
+    const onDone = () => setRevealed(true);
+    window.addEventListener(PRELOAD_DONE_EVENT, onDone);
+    return () => window.removeEventListener(PRELOAD_DONE_EVENT, onDone);
+  }, []);
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -92,6 +107,7 @@ export default function Hero() {
           src="/hero-montage.mp4"
           poster={SHOWREEL.poster}
           autoLoop
+          paused={!revealed}
           className="h-full w-full"
         />
         {/* bottom-to-top scrim for legibility */}
