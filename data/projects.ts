@@ -57,7 +57,9 @@ export const FILTERS: { id: Category | "all"; label: string }[] = [
 // TODO: replace with real AdventHQ asset CDN.
 const CDN = "https://storage.googleapis.com/gtv-videos-bucket/sample";
 
-// Real AdventHQ assets, served locally from /public/portfolio.
+// Real AdventHQ assets. Heavy video is served from R2; stills/posters stay in
+// /public/portfolio.
+const R2 = "https://pub-0ff0ac88318440fa82f78feb1561ed93.r2.dev";
 const REMEDY = "/portfolio/hyper-motion/remedy-drinks";
 const remedyStill = (n: number) => `${REMEDY}/images/web/${n}.jpg`;
 
@@ -75,8 +77,8 @@ export const projects: Project[] = [
     year: 2026,
     aspectRatio: "9:16",
     poster: remedyStill(14),
-    previewSrc: `${REMEDY}/remedydrinks.mp4`,
-    fullSrc: `${REMEDY}/remedydrinks.mp4`,
+    previewSrc: `${R2}/hyper-motion/remedydrinks.mp4`,
+    fullSrc: `${R2}/hyper-motion/remedydrinks.mp4`,
     caseStudy: {
       brief:
         "Remedy wanted a sound-on, scroll-stopping hero for their no-sugar Pomegranate kombucha — a vertical film that felt like a hit of energy, not another can-on-a-table product shot.",

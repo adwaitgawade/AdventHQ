@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/data/projects";
 import { CATEGORY_LABELS } from "@/data/projects";
 import { useReducedMotion } from "@/lib/useReducedMotion";
@@ -37,12 +37,19 @@ export default function Tile({ project, onOpen, featured }: Props) {
     if (reduced) return;
     setHover(true);
     setLoadVideo(true);
-    requestAnimationFrame(() => videoRef.current?.play().catch(() => {}));
   };
-  const leave = () => {
-    setHover(false);
-    videoRef.current?.pause();
-  };
+  const leave = () => setHover(false);
+
+  // Play/pause once the <video> has actually mounted. The first hover only
+  // schedules the mount, so `videoRef.current` doesn't exist yet inside
+  // `enter` — driving it from an effect guarantees the element is committed
+  // before we call play(), so the preview plays on the very first hover.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || reduced) return;
+    if (hover) v.play().catch(() => {});
+    else v.pause();
+  }, [hover, loadVideo, reduced]);
 
   return (
     <motion.button

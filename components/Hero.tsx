@@ -10,6 +10,7 @@ import MagneticButton from "./MagneticButton";
 import { useSmoothScroll } from "./SmoothScroll";
 import { useAudio } from "./AudioProvider";
 import { PRELOAD_DONE_EVENT } from "./Preloader";
+import { HERO_READY_EVENT } from "./VideoPreloader";
 
 const HEADLINE = ["Motion that", "moves the needle."];
 
@@ -107,7 +108,9 @@ export default function Hero() {
           src="/hero-montage.mp4"
           poster={SHOWREEL.poster}
           autoLoop
+          priority
           paused={!revealed}
+          onReady={() => window.dispatchEvent(new Event(HERO_READY_EVENT))}
           className="h-full w-full"
         />
         {/* bottom-to-top scrim for legibility */}

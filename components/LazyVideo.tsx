@@ -15,6 +15,14 @@ type Props = {
   manual?: boolean;
   /** Hold autoplay while true, even if in view (e.g. until the preloader lifts). */
   paused?: boolean;
+  /**
+   * Load eagerly and with the highest priority: attach the source on mount
+   * (ignoring in-view) and set `preload="auto"` so the file downloads right
+   * away instead of waiting for scroll or play. Used for the hero.
+   */
+  priority?: boolean;
+  /** Fires once the source has buffered enough to play through. */
+  onReady?: () => void;
   muted?: boolean;
   loop?: boolean;
   playsInline?: boolean;
@@ -40,6 +48,8 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
     autoLoop = false,
     manual = false,
     paused = false,
+    priority = false,
+    onReady,
     muted = true,
     loop = true,
     playsInline = true,
@@ -52,7 +62,9 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
   });
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
-  const [load, setLoad] = useState(false);
+  // Priority videos attach their source immediately; everything else waits
+  // until it approaches the viewport.
+  const [load, setLoad] = useState(priority);
 
   // Follow the site-wide audio master. The element only mounts once `load`
   // flips true, so re-sync on that too.
@@ -101,7 +113,8 @@ const LazyVideo = forwardRef<LazyVideoHandle, Props>(function LazyVideo(
           muted={muted}
           loop={loop}
           playsInline={playsInline}
-          preload="none"
+          preload={priority ? "auto" : "none"}
+          onCanPlayThrough={onReady}
           className="absolute inset-0 h-full w-full"
           style={{ objectFit }}
         />
