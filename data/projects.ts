@@ -107,9 +107,12 @@ export const projects: Project[] = [
     category: "ads",
     year: 2025,
     aspectRatio: "9:16",
-    poster: poster("pe-nation"),
+    poster: `${R2}/ads/pe-nation.webp`,
     previewSrc: `${R2}/ads/pe-nation.mp4`,
     fullSrc: `${R2}/ads/pe-nation.mp4`,
+    caseStudy: {
+      stills: [`${R2}/ads/pe-nation.webp`],
+    },
   },
   {
     id: "adine",
